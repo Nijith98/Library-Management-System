@@ -1,0 +1,133 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "MEM-.YYYY.-.#####",
+ "creation": "2025-06-03 10:09:44.123354",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "full_name",
+  "column_break_o5iq",
+  "email_address",
+  "column_break_ydvl",
+  "phone_number",
+  "section_break_0qzu",
+  "membership_start_date",
+  "column_break_45ed",
+  "membership_status",
+  "section_break_p68i",
+  "max_books_allowed",
+  "column_break_bwlj",
+  "books_currently_loaned"
+ ],
+ "fields": [
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Full Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "email_address",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email Address",
+   "options": "Email",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "phone_number",
+   "fieldtype": "Data",
+   "label": "Phone Number"
+  },
+  {
+   "default": "Today",
+   "fieldname": "membership_start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Membership Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "membership_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Membership Status",
+   "options": "Active\nInactive\nSuspended",
+   "reqd": 1
+  },
+  {
+   "default": "3",
+   "fieldname": "max_books_allowed",
+   "fieldtype": "Int",
+   "label": "Max Books Allowed",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "books_currently_loaned",
+   "fieldtype": "Int",
+   "label": "Books Currently Loaned",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_o5iq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ydvl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_0qzu",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_45ed",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_p68i",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bwlj",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-06-03 15:13:36.621008",
+ "modified_by": "Administrator",
+ "module": "Library Management",
+ "name": "Library Member",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Librarian",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Library Member"
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "full_name"
+}
