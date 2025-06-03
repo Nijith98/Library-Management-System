@@ -1,0 +1,26 @@
+{
+  "doctype": "DocType",
+  "name": "Library Settings",
+  "module": "Library Management",
+  "custom": 1,
+  "autoname": "Library Settings",
+  "issingle": 1,
+  "fields": [
+    {
+      "fieldname": "loan_period_days",
+      "fieldtype": "Int",
+      "label": "Loan Period Days",
+      "reqd": 1,
+      "default": "15"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1
+    }
+  ]
+}
