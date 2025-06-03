@@ -1,0 +1,166 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "LOAN-.YYYY.-.#####",
+ "creation": "2025-06-03 14:12:57.258211",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "book",
+  "column_break_jtw8",
+  "book_title",
+  "column_break_xqvk",
+  "isbn",
+  "section_break_b7w4",
+  "member",
+  "column_break_h5ur",
+  "member_name",
+  "section_break_fv2e",
+  "loan_date",
+  "column_break_0ddy",
+  "due_date",
+  "column_break_zeb8",
+  "return_date",
+  "section_break_hyry",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_hyry",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Library Loan",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "book",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Book",
+   "options": "Book",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "book.title",
+   "fieldname": "book_title",
+   "fieldtype": "Data",
+   "label": "Book Title",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fetch_from": "book.isbn",
+   "fieldname": "isbn",
+   "fieldtype": "Data",
+   "label": "ISBN",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "member",
+   "fieldtype": "Link",
+   "label": "Member",
+   "options": "Library Member",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "member.full_name",
+   "fieldname": "member_name",
+   "fieldtype": "Data",
+   "label": "Member Name",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "default": "Now",
+   "fieldname": "loan_date",
+   "fieldtype": "Datetime",
+   "label": "Loan Date",
+   "read_only_depends_on": "eval:doc.docstatus==1",
+   "reqd": 1
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Datetime",
+   "label": "Due Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "return_date",
+   "fieldtype": "Datetime",
+   "label": "Return Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_jtw8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_xqvk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_b7w4",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_h5ur",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_fv2e",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_0ddy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zeb8",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-06-03 15:13:42.925166",
+ "modified_by": "Administrator",
+ "module": "Library Management",
+ "name": "Library Loan",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Librarian",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Library Member"
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

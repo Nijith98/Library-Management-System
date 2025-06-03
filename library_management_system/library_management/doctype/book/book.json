@@ -1,0 +1,127 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:isbn",
+ "creation": "2025-06-03 12:43:49.083854",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "column_break_9er2",
+  "isbn",
+  "section_break_yutv",
+  "publisher",
+  "column_break_w7hm",
+  "publication_year",
+  "section_break_af9w",
+  "total_quantity",
+  "column_break_bmds",
+  "available_quantity",
+  "section_break_uxrp",
+  "authors"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "isbn",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "ISBN",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "authors",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Authors",
+   "reqd": 1
+  },
+  {
+   "fieldname": "publisher",
+   "fieldtype": "Data",
+   "label": "Publisher"
+  },
+  {
+   "fieldname": "publication_year",
+   "fieldtype": "Int",
+   "label": "Publication Year"
+  },
+  {
+   "default": "1",
+   "fieldname": "total_quantity",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Total Quantity",
+   "reqd": 1
+  },
+  {
+   "fieldname": "available_quantity",
+   "fieldtype": "Int",
+   "label": "Available Quantity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_9er2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_yutv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_w7hm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_af9w",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bmds",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_uxrp",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-06-03 15:13:15.849259",
+ "modified_by": "Administrator",
+ "module": "Library Management",
+ "name": "Book",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Librarian",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Library Member"
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
