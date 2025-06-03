@@ -95,7 +95,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-03 15:13:15.849259",
+ "modified": "2025-06-03 15:58:32.384852",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",
@@ -123,5 +123,6 @@
  "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "title"
 }
