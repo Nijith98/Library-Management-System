@@ -15,6 +15,8 @@
   "member",
   "column_break_h5ur",
   "member_name",
+  "section_break_tybz",
+  "status",
   "section_break_fv2e",
   "loan_date",
   "column_break_0ddy",
@@ -125,13 +127,24 @@
   {
    "fieldname": "column_break_zeb8",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Loaned\nReturned\nOverdue",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_tybz",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-06-03 15:13:42.925166",
+ "modified": "2025-06-04 00:32:31.079033",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Library Loan",
