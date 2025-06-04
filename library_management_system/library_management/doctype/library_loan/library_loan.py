@@ -46,3 +46,24 @@ class LibraryLoan(Document):
         member = frappe.get_doc("Library Member", self.member)
         member.books_currently_loaned = (member.books_currently_loaned or 1) + 1
         member.save()
+    
+    @frappe.whitelist()
+    def mark_as_returned(self):
+        if self.status not in ["Loaned", "Overdue"]:
+            return
+        
+        # Update Library Loan (submitted) via direct DB write
+        frappe.db.set_value(self.doctype, self.name, {
+            "status": "Returned",
+            "return_date": frappe.utils.now_datetime()
+        })
+
+        # Update and save Book
+        book = frappe.get_doc("Book", self.book)
+        book.available_quantity = (book.available_quantity or 0) + 1
+        book.save()
+
+        # Update and save Library Member
+        member = frappe.get_doc("Library Member", self.member)
+        member.books_currently_loaned = (member.books_currently_loaned or 1) - 1
+        member.save()
