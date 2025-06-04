@@ -2,20 +2,9 @@
 // For license information, please see license.txt
 
 
-frappe.ui.form.on("Library Loan", {
-    // Add "Mark as Returned" button if loan is active or overdue and button show only document after submit
-    refresh: function(frm) {
-        if (frm.doc.docstatus === 1 && ['Loaned', 'Overdue'].includes(frm.doc.status)) {
-            frm.add_custom_button('Mark as Returned', function() {
-                frm.call('mark_as_returned').then(() => {
-                    frappe.msgprint('Book returned successfully');
-                    frm.reload_doc();
-                });
-            }, 'Actions');
-        }
-    },
+// Show the book title and ISBN when a book is selected, and display the member's full name when a member is selected.
 
-    // Pop up the book title and ISBN when a book is selected
+frappe.ui.form.on("Library Loan", {
 	book: function(frm) {
         frappe.db.get_value("Book", frm.doc.book, ['title', 'isbn'] )
         .then(r => {
@@ -27,7 +16,6 @@ frappe.ui.form.on("Library Loan", {
         })
 	},
 
-    // Pop up the Library Member's full name when a member is selected
     member: function(frm) {
         frappe.db.get_value("Library Member", frm.doc.member, 'full_name')
         .then(r => {
