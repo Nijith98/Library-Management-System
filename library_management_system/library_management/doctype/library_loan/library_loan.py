@@ -14,6 +14,9 @@ class LibraryLoan(Document):
     def on_submit(self):
         self.set_due_date()
 
+    def on_cancel(self):
+        self.cancel_library_loan()
+
     # Raise an exception if the book is not available.
     def validate_book_availablity(self):
         available_qty = frappe.db.get_value("Book", self.book, "available_quantity")
@@ -31,6 +34,7 @@ class LibraryLoan(Document):
         if dict_value.membership_status != "Active":
             frappe.throw(f"Member '<b>{self.member_name}</b>' is not active")
 
+
     # Automatically calculate and update due_date and status when the document is submitted
     def set_due_date(self):
         loan_per_days = frappe.db.get_single_value('Library Settings', 'loan_period_days')
@@ -47,6 +51,7 @@ class LibraryLoan(Document):
         member.books_currently_loaned = (member.books_currently_loaned or 1) + 1
         member.save()
     
+
     @frappe.whitelist()
     def mark_as_returned(self):
         if self.status not in ["Loaned", "Overdue"]:
@@ -67,3 +72,16 @@ class LibraryLoan(Document):
         member = frappe.get_doc("Library Member", self.member)
         member.books_currently_loaned = (member.books_currently_loaned or 1) - 1
         member.save()
+
+
+    # Cancel loan: update book quantity and member loan count if status is Loaned/Overdue
+    def cancel_library_loan(self):
+        if self.status in ["Loaned", "Overdue"]:
+            book = frappe.get_doc("Book", self.book)
+            member = frappe.get_doc("Library Member", self.member)
+
+            book.available_quantity += 1
+            member.books_currently_loaned -= 1
+
+            book.save()
+            member.save()
