@@ -17,6 +17,7 @@ class LibraryLoan(Document):
     # Raise an exception if the book is not available.
     def validate_book_availablity(self):
         available_qty = frappe.db.get_value("Book", self.book, "available_quantity")
+
         if available_qty <= 0:
             frappe.throw(f"Book '<b>{self.book}</b>' is not available")
     
@@ -24,6 +25,7 @@ class LibraryLoan(Document):
     # Fetch member details: max allowed books, current loaned books, and membership status
     def validate_member_loan_eligibility(self):
         dict_value = frappe.db.get_value("Library Member", self.member, ['max_books_allowed', 'books_currently_loaned', 'membership_status'], as_dict=1)
+        
         if dict_value.max_books_allowed <= dict_value.books_currently_loaned:
             frappe.throw(f"Member '<b>{self.member_name}</b>' has reached the maximum loan limit")
         if dict_value.membership_status != "Active":
