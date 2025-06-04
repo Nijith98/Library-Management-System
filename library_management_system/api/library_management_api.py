@@ -26,6 +26,7 @@ def list_available_books(title=None, isbn=None):
         return books
 
     except Exception as e:
+        # For unexpected errors
         frappe.log_error(frappe.get_traceback(), "Error in list_available_books")
         return {
             "status": "error",
@@ -51,14 +52,7 @@ def member_loan_history(member_id):
             "status": "success",
             "data": loans
         }
-
-    except frappe.ValidationError as ve:
-        # For custom validation errors (like frappe.throw)
-        return {
-            "status": "fail",
-            "message": str(ve)
-        }
-
+    
     except Exception as e:
         # For unexpected errors
         frappe.log_error(frappe.get_traceback(), "Error in member_loan_history")
@@ -98,11 +92,19 @@ def issue_new_book():
         }
 
     except frappe.ValidationError as e:
+        # For custom validation errors (like frappe.throw)
         frappe.local.response.http_status_code = 422
-        return {"error": str(e), "status": "failed"}
+        return {
+            "error": str(e),
+            "status": "failed"
+        }
     except Exception as e:
+        # For unexpected errors
         frappe.local.response.http_status_code = 500
-        return {"error": str(e), "status": "error"}
+        return {
+            "error": str(e),
+            "status": "error"
+        }
 
 
 # API to process the return of a book, update loan status, book stock, and member loan count
@@ -144,11 +146,23 @@ def process_book_return():
         }
 
     except frappe.DoesNotExistError:
+        # Raised when the requested document does not exist
         frappe.local.response.http_status_code = 404
-        return {"error": _("Loan not found"), "status": "error"}
+        return {
+            "error": _("Loan not found"),
+            "status": "error"
+        }
     except frappe.ValidationError as e:
+        # For custom validation errors (like frappe.throw)
         frappe.local.response.http_status_code = 422
-        return {"error": str(e), "status": "failed"}
+        return {
+            "error": str(e),
+            "status": "failed"
+        }
     except Exception as e:
+        # For unexpected errors
         frappe.local.response.http_status_code = 500
-        return {"error": str(e), "status": "error"}
+        return {
+            "error": str(e),
+            "status": "error"
+        }
