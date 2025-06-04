@@ -165,6 +165,11 @@ app_license = "mit"
 # 		"library_management_system.tasks.monthly"
 # 	],
 # }
+scheduler_events = {
+    "daily": [
+        "library_management_system.tasks.update_overdue_status"
+    ]
+}
 
 # Testing
 # -------
