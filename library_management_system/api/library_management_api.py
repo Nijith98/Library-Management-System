@@ -1,5 +1,8 @@
 import frappe
 from frappe import _
+import json
+from frappe.utils import nowdate
+from werkzeug.exceptions import BadRequest
 
 
 # Return list of available books filtered by optional title and ISBN
@@ -64,3 +67,88 @@ def member_loan_history(member_id):
             "message": "Something went wrong while fetching the loan history.",
             "error": str(e)
         }
+
+
+# API to issue a new book to a member and create a Library Loan record
+@frappe.whitelist(allow_guest=False)
+def issue_new_book():
+    try:
+        # Parse JSON body
+        data = frappe.local.form_dict
+        book_name = data.get("book_name")
+        member_name = data.get("member_name")
+
+        if not book_name or not member_name:
+            raise BadRequest(_("Missing book_name or member_name"))
+
+        # Create Library Loan doc
+        loan = frappe.get_doc({
+            "doctype": "Library Loan",
+            "book": book_name,
+            "member": member_name,
+            "loan_date": nowdate()
+        })
+
+        loan.insert(ignore_permissions=True)
+        loan.submit()
+        return {
+            "message": _("Library Loan created successfully."),
+            "loan_id": loan.name,
+            "status": "success"
+        }
+
+    except frappe.ValidationError as e:
+        frappe.local.response.http_status_code = 422
+        return {"error": str(e), "status": "failed"}
+    except Exception as e:
+        frappe.local.response.http_status_code = 500
+        return {"error": str(e), "status": "error"}
+
+
+# API to process the return of a book, update loan status, book stock, and member loan count
+@frappe.whitelist()
+def process_book_return():
+    try:
+        # Parse input JSON
+        loan_name = frappe.local.form_dict.get("loan_name")
+        if not loan_name:
+            raise BadRequest(_("Missing loan_name"))
+
+        # Load the Library Loan document
+        loan = frappe.get_doc("Library Loan", loan_name)
+
+        # Call the same return logic used in UI
+        if loan.status not in ["Loaned", "Overdue"]:
+            frappe.local.response.http_status_code = 400
+            return {"error": _("Loan is not currently active"), "status": "failed"}
+
+        # Mark as returned (uses db.set_value because it's submitted)
+        frappe.db.set_value("Library Loan", loan.name, {
+            "status": "Returned",
+            "return_date": frappe.utils.now_datetime()
+        })
+
+        # Update Book
+        book = frappe.get_doc("Book", loan.book)
+        book.available_quantity = (book.available_quantity or 0) + 1
+        book.save()
+
+        # Update Member
+        member = frappe.get_doc("Library Member", loan.member)
+        member.books_currently_loaned = (member.books_currently_loaned or 1) - 1
+        member.save()
+
+        return {
+            "message": _("Book return processed successfully."),
+            "status": "success"
+        }
+
+    except frappe.DoesNotExistError:
+        frappe.local.response.http_status_code = 404
+        return {"error": _("Loan not found"), "status": "error"}
+    except frappe.ValidationError as e:
+        frappe.local.response.http_status_code = 422
+        return {"error": str(e), "status": "failed"}
+    except Exception as e:
+        frappe.local.response.http_status_code = 500
+        return {"error": str(e), "status": "error"}
